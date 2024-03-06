@@ -1,0 +1,9 @@
+### Security
+### User/Pass
+### Authorization: Basic {{username}} {{password}}
+
+#### PRODUCTS
+### GET All Products
+GET http://localhost:8080/product
+Authorization: Basic {{username}} {{password}}
+Accept: application/json
