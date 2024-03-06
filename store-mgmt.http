@@ -1,9 +1,15 @@
 ### Security
 ### User/Pass
 ### Authorization: Basic {{username}} {{password}}
+### Login
+
+POST http://localhost:8080/login
+Content-Type: multipart/form-data
+username=john&password=doe
+
 
 #### PRODUCTS
 ### GET All Products
-GET http://localhost:8080/product
+GET http://localhost:8080/api/product
 Authorization: Basic {{username}} {{password}}
 Accept: application/json
