@@ -2,6 +2,7 @@ package ro.etataru.storemgmt.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -16,6 +17,9 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true)
 public class SecurityConfig {
 
     @Bean
@@ -37,7 +41,7 @@ public class SecurityConfig {
         UserDetails john = User.withUsername("john").password(encoder()
                 .encode("doe")).roles("USER").build();
         UserDetails jane = User.withUsername("jane").password(encoder()
-                .encode("doe")).roles("USER", "ADMIN").build();
+                .encode("doe")).roles("VIEWER", "ADMIN").build();
         UserDetails admin = User.withUsername("admin").password(encoder()
                 .encode("admin")).roles("ADMIN").build();
         return new InMemoryUserDetailsManager(john, jane, admin);

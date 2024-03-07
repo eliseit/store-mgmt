@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -37,7 +39,7 @@ class StoreMgmtApplicationTests {
     void contextLoads() {
     }
 
-    @WithMockUser(value = "john")
+    @WithMockUser(username = "jane", roles = { "VIEWER" })
     @Test
     public void testFindAll() throws Exception {
 
@@ -48,10 +50,10 @@ class StoreMgmtApplicationTests {
         ;
     }
 
-    @WithMockUser(authorities = "USER")
+    @WithAnonymousUser
     @Test
-    void endpointWhenUserAuthorityThenAuthorized() throws Exception {
+    void endpointWhenUserMissingRoleThenUnauthorized() throws Exception {
         this.mockMvc.perform(get("/api/product"))
-                .andExpect(status().isOk());
+                .andExpect(status().isUnauthorized());
     }
 }
