@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ro.etataru.storemgmt.services.ProductService;
 import ro.etataru.storemgmt.web.dtos.Product;
+import ro.etataru.storemgmt.web.errorhandling.ProductNotFoundException;
 import ro.etataru.storemgmt.web.mappers.ProductMapper;
 
 import java.net.URI;
@@ -27,7 +28,7 @@ public class ProductsController {
     }
 
     @GetMapping()
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_VIEWER')")
     public List<Product> getAllProducts() {
         log.info("All products request!");
 
@@ -37,14 +38,21 @@ public class ProductsController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_VIEWER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_VIEWER')")
     public Product getProductById(@PathVariable int id) {
         log.info("Product by id request!");
 
-        return productMapper.toDto(productService.getProductById(id));
+        ro.etataru.storemgmt.entities.Product product = productService.getProductById(id);
+
+        if (null == product) {
+            throw new ProductNotFoundException("id: " + id);
+        }
+        return productMapper.toDto(product);
     }
 
     @PostMapping()
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product savedProduct = productMapper.toDto(productService.saveProduct(product));
 
