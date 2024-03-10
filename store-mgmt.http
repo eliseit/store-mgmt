@@ -19,14 +19,12 @@ Authorization: Basic {{username}} {{password}}
 Accept: application/json
 
 ### Create Product
-POST http://localhost:8080/api/product/1
+POST http://localhost:8080/api/product
 Authorization: Basic {{username}} {{password}}
-Accept: application/json
 Content-Type: application/json
 
 {
-  "name": "content",
-  "description": "book description",
-  "price": {{$random.integer()}},
-  "ts": {{$timestamp}}
+  "name": "Effective Java",
+  "description": "Joshua Bloch Third edition",
+  "price": {{$random.integer()}}
 }

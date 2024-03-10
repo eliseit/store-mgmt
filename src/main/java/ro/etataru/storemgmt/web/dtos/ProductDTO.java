@@ -1,9 +1,9 @@
 package ro.etataru.storemgmt.web.dtos;
 
-public record Product(
+public record ProductDTO(
         String id,
         String name,
         String description,
-        int price
+        long price
 ) {
 }

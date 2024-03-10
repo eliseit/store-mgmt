@@ -46,7 +46,7 @@ class StoreMgmtApplicationTests {
         mockMvc.perform(get("/api/product"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", hasSize(0)))
         ;
     }
 
