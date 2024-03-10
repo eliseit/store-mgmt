@@ -13,4 +13,12 @@ public class ProductService {
                 new Product()
         );
     }
+
+    public Product getProductById(int id) {
+        return new Product();
+    }
+
+    public Product saveProduct(ro.etataru.storemgmt.web.dtos.Product product) {
+        return new Product();
+    }
 }
