@@ -43,7 +43,7 @@ class StoreMgmtApplicationTests {
     @Test
     public void testFindAll() throws Exception {
 
-        mockMvc.perform(get("/api/product"))
+        mockMvc.perform(get("/api/v1/product"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$", hasSize(0)))
@@ -53,7 +53,7 @@ class StoreMgmtApplicationTests {
     @WithAnonymousUser
     @Test
     void endpointWhenUserMissingRoleThenUnauthorized() throws Exception {
-        this.mockMvc.perform(get("/api/product"))
+        this.mockMvc.perform(get("/api/v1/product"))
                 .andExpect(status().isUnauthorized());
     }
 }

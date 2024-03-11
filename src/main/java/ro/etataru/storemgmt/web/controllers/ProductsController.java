@@ -2,6 +2,7 @@ package ro.etataru.storemgmt.web.controllers;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/v1/product")
 @Slf4j
 public class ProductsController {
 
@@ -50,7 +51,8 @@ public class ProductsController {
         return productMapper.toDto(product);
     }
 
-    @PostMapping()
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO product) {
         log.info("Creating product: " + product);
@@ -63,7 +65,7 @@ public class ProductsController {
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(savedProduct.id())
+                .buildAndExpand(savedProduct.getId())
                 .toUri();
 
         return ResponseEntity.created(location).build();
