@@ -21,4 +21,10 @@ public class Product {
 
     public Product() {
     }
+
+    public Product(String name, String description, long price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }

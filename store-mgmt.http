@@ -14,7 +14,7 @@ Authorization: Basic {{username}} {{password}}
 Accept: application/json
 
 ### GET Product by Id
-GET http://localhost:8080/api/v1/product/1
+GET http://localhost:8080/api/v1/product/2
 Authorization: Basic {{username}} {{password}}
 Accept: application/json
 
@@ -24,7 +24,7 @@ Authorization: Basic {{username}} {{password}}
 Content-Type: application/json
 
 {
-  "name": "Effective Java",
-  "description": "Joshua Bloch Third edition",
+  "name": "Design Patterns",
+  "description": "Short Description",
   "price": {{$random.integer()}}
 }
