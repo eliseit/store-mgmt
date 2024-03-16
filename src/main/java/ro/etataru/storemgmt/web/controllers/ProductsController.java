@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ro.etataru.storemgmt.services.ProductService;
+import ro.etataru.storemgmt.web.dtos.PriceUpdateForProductDTO;
 import ro.etataru.storemgmt.web.dtos.ProductDTO;
 import ro.etataru.storemgmt.web.errorhandling.ProductNotFoundException;
 import ro.etataru.storemgmt.web.mappers.ProductMapper;
@@ -74,6 +75,44 @@ public class ProductsController {
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedProduct.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ProductDTO> updateProduct(@RequestBody ProductDTO product) {
+        log.info("Update product: " + product);
+
+        ProductDTO savedProduct = productMapper.toDto(
+                productService.updateProduct(
+                        productMapper.toProductUpdate(product)
+                )
+        );
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(savedProduct.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+    }
+
+    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ProductDTO> updatePriceForProduct(@RequestBody PriceUpdateForProductDTO priceUpdateForProductDTO) {
+        log.info("Updating price for product: " + priceUpdateForProductDTO);
+
+        ProductDTO updatedProduct = productMapper.toDto(
+                productService.updatePriceOnProduct(priceUpdateForProductDTO)
+        );
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(updatedProduct.getId())
                 .toUri();
 
         return ResponseEntity.created(location).build();

@@ -22,4 +22,13 @@ public class ProductMapper {
                 productDto.getPrice()
         );
     }
+
+    public Product toProductUpdate(ProductDTO productDto) {
+        return new Product(
+                Long.parseLong(productDto.getId()),
+                productDto.getName(),
+                productDto.getDescription(),
+                productDto.getPrice()
+        );
+    }
 }

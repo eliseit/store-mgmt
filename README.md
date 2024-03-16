@@ -17,4 +17,8 @@ We can:
 
 ### DOCUMENTATION
 OPEN API standard, with Swagger.
-API can be access at [swagger-ui.html](http:\\localhost:8080\swagger-ui.html)
+API can be access at [swagger-ui.html](http://localhost:8080/swagger-ui.html)
+
+## Dev links
+Springboot:
+1. [Actuator](http://localhost:8080/actuator)
