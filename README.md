@@ -14,3 +14,7 @@ We can:
     - List all products
     - List one product by id
     - Add one new product
+
+### DOCUMENTATION
+OPEN API standard, with Swagger.
+API can be access at [swagger-ui.html](http:\\localhost:8080\swagger-ui.html)
