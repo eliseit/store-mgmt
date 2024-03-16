@@ -2,6 +2,8 @@ package ro.etataru.storemgmt.web.controllers;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,7 +42,7 @@ public class ProductsController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_VIEWER')")
-    public ProductDTO getProductById(@PathVariable long id) {
+    public EntityModel<ProductDTO> getProductById(@PathVariable long id) {
         log.info("Product by id request!");
 
         ro.etataru.storemgmt.entities.Product product = productService.getProductById(id);
@@ -48,7 +50,13 @@ public class ProductsController {
         if (null == product) {
             throw new ProductNotFoundException("Product with id: " + id + " not found.");
         }
-        return productMapper.toDto(product);
+
+        EntityModel<ProductDTO> entityModel = EntityModel.of(productMapper.toDto(product));
+
+        WebMvcLinkBuilder link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getAllProducts());
+        entityModel.add(link.withRel("all-products"));
+
+        return entityModel;
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
