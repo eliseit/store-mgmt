@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Entity()
+@Entity
 @AllArgsConstructor
 @Data
 public class Product {

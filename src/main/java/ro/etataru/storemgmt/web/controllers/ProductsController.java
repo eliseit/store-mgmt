@@ -46,7 +46,7 @@ public class ProductsController {
         ro.etataru.storemgmt.entities.Product product = productService.getProductById(id);
 
         if (null == product) {
-            throw new ProductNotFoundException("id: " + id);
+            throw new ProductNotFoundException("Product with id: " + id + " not found.");
         }
         return productMapper.toDto(product);
     }
@@ -70,4 +70,13 @@ public class ProductsController {
 
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public void deleteProductById(@PathVariable long id) {
+        log.info("Delete product with id: " + id);
+
+        productService.deleteProductById(id);
+    }
+
 }
