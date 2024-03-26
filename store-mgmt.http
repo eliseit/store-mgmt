@@ -1,0 +1,30 @@
+### Security
+### User/Pass
+### Authorization: Basic {{username}} {{password}}
+### Login
+
+POST http://localhost:8080/login
+Content-Type: multipart/form-data
+username=john&password=doe
+
+
+### GET All Products
+GET http://localhost:8080/api/v1/product
+Authorization: Basic {{username}} {{password}}
+Accept: application/json
+
+### GET Product by Id
+GET http://localhost:8080/api/v1/product/2
+Authorization: Basic {{username}} {{password}}
+Accept: application/json
+
+### Create Product
+POST http://localhost:8080/api/v1/product
+Authorization: Basic {{username}} {{password}}
+Content-Type: application/json
+
+{
+  "name": "Design Patterns",
+  "description": "Short Description",
+  "price": {{$random.integer()}}
+}
